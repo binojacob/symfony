@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommentsController!{% endblock %}
+
+{% block main %}
+{{ include('./partial/_welcome.html.twig') }}
+<h2> List Of Books</h2>
+
+<div class="example-wrapper">
+
+<ul  class="list-group list-group-horizontal" style="list-style: none;">
+    <li class="list-group-item" style="width: 250px;float:left"><strong>Book Name</strong></li>
+    <li class="list-group-item" style="width: 250px;float:left"><strong>Author Name</strong></li>
+</ul>
+
+
+    {% for book in listbooks %}
+    <ul  class="list-group list-group-horizontal" style="list-style: none;font-size:13px">
+        <li class="list-group-item" style="width: 250px;float:left">{{ book.name  }}</li>
+
+        <li class="list-group-item" style="width: 250px;float:left">{{ book.full_name  }}</li>
+        <li class="list-group-item" style="width: 100px;float:left"">
+            <a href={{path("app_add_comment",{'book':  book.id})}} class="btn btn-sm btn-primary">
+                <i class="fa-solid fa-comment-text">Comment</i>
+            </a>
+        </li>
+
+         <li class="list-group-item" style="width: 200px;">
+
+                {% if(is_granted('ROLE_ADMIN')) %}
+                    <a href={{path("app_edit_books",{'id':  book.id})}} class="btn btn-sm btn-primary">
+                        <i class="fa fa-edit" aria-hidden="true">Edit</i>
+                    </a>
+                    <a href={{path("app_del_books",{'id':  book.id})}} class="btn btn-sm btn-primary">
+                          <i class="fa fa-trash" aria-hidden="true">Delete</i> 
+                    </a>
+
+                {%  elseif(is_granted('ROLE_AUTHOR')) %}
+                        {% if app.user.id == book.auther_id %}
+                            <a href={{path("app_edit_books",{'id':  book.id})}} class="btn btn-sm btn-primary">
+                                <i class="fa fa-edit" aria-hidden="true">Edit</i>
+                                
+                            </a>
+
+                            <a href={{path("app_del_books",{'id':  book.id})}} class="btn btn-sm btn-primary">
+                                <i class="fa fa-trash" aria-hidden="true">Delete</i> 
+                            </a>
+
+                        {% endif %}
+                {% endif %}
+
+        </li>
+
+    </ul>
+    {% endfor %}
+</div>
+
+{% endblock %}
+
+{% block sidebar %}
+  {{ include('./partial/_banner.html.twig') }}
+{% endblock %}
