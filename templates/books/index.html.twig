@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Books{% endblock %}
+
+{% block main %}
+{{ include('./partial/_welcome.html.twig') }}
+<div class="example-wrapper">
+   <h2> Edit Books</h2>
+   {{ form(form, {'method': 'POST'}) }}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+  {{ include('./partial/_banner.html.twig') }}
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'register' %}
+
+{% block main %}
+
+
+    {#
+        This references the Stimulus controller defined in
+        "assets/controllers/login-controller.js".
+        See https://symfony.com/doc/current/frontend/encore/simple-example.html#stimulus-symfony-ux
+        More info on Symfony UX https://ux.symfony.com
+    #}
+    <div class="row" {{ stimulus_controller('login') }}{# @see assets/controllers/login-controller.js #}>
+        <div class="col-sm-7">
+            <div class="jumbotron">
+
+                {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+
+                    {{ form_widget(form)}}
+
+                    <div class="form-error">
+                        {{ form_errors(form) }}
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+
+{{ include('./partial/_banner.html.twig') }}
+
+
+{% endblock %}

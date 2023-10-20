@@ -1,0 +1,9 @@
+<strong>
+
+{% if  app.user.username is defined %}
+    {{'Welcome '~app.user.username}}
+{% else %}
+    Anonymous user
+{% endif %}
+
+</strong>

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block body_id 'register' %}
+
+{% block main %}
+
+{{ include('./partial/_welcome.html.twig') }}
+
+    <div class="row" {{ stimulus_controller('login') }}{# @see assets/controllers/login-controller.js #}>
+        <div class="col-sm-7">
+            <div class="jumbotron">
+
+                <h2>Edit User</h2>
+
+                {{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+
+                    {{ form_widget(form)}}
+
+                    <div class="form-error">
+                        {{ form_errors(form) }}
+                    </div>
+
+                {{ form_end(form) }}
+            </div>
+        </div>
+
+    </div>
+{% endblock %}
+
+{% block sidebar %}
+<a href={{ path("app_admin") }}>Home Page </a>
+{% endblock %}

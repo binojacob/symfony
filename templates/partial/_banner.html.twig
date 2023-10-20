@@ -1,0 +1,26 @@
+
+<a class="nav-link" href={{ path("app_list_books") }}>List of Books </a>
+
+
+{% if(is_granted('ROLE_AUTHOR') or  is_granted('ROLE_ADMIN')) %}
+    <a class="nav-link" href="{{ path('app_add_books') }}">Add Books</a> 
+{% endif %}
+
+{% if(is_granted('ROLE_ADMIN')) %}
+    <a class="nav-link" href="{{ path('app_admin') }}">Users List & Roles</a> 
+    <a class="nav-link" href="{{ path('app_admin_user_register') }}">Add New User</a>
+{% endif %}
+
+{% 
+    set token = csrf_token('logout')
+    
+%}
+
+
+{% if(is_granted('ROLE_AUTHOR') or is_granted('ROLE_USER')  or is_granted('ROLE_ADMIN')) %}
+    <a class="nav-link" href="{{ path('security_logout', {'token' : csrf_token('logout')}) }}">Logout</a>
+
+{% else %}
+    <a class="nav-link" href="{{ path('security_login') }}">Login</a> 
+    <a class="nav-link" href="{{ path('app_user_register') }}">Signup</a>
+{% endif %}
