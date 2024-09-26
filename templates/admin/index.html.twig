@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block main %}
+{{ include('./partial/_welcome.html.twig') }}
+<h2> Users and Roles</h2>
+<div>
+       {% for user in users %}
+            <ul  class="list-group list-group-horizontal" style="list-style: none;font-size:14px">
+                <li class="list-group-item"  style="width:200px">{{ user.fullName  }}</li>
+                <li class="list-group-item" style="width:250px">{{ user.email  }}</li>
+
+                {# <li class="list-group-item">
+
+                </li>
+                 #}
+                <li class="list-group-item"  style="width:200px">
+                    <ul class="list-group" style="list-style-type: none;font-size:14px">
+                        {% for role in user.getRole() %}
+                        <li >{{ role.roleName  }}</li>
+                        {% endfor %}
+                     </ul>
+
+                    {% set rolelist = [] %}
+                    {% for role in user.getRole() %}
+                    {% set rolelist = rolelist|merge([role.id])  %}
+                    {% endfor %}
+
+
+
+                     {% if  role_author  not in rolelist %}
+                            <a href={{path("enable_author",{'id':  user.id})}} >Enable AuthorRole </a>
+                      {% endif %}
+
+                      {% if role_author  in rolelist %}
+                            <a href={{path("remove_author",{'id':  user.id})}} >Remove AuthorRole </a>
+                      {% endif %}
+
+                </li>
+
+                <li class="list-group-item">
+                    <a href="{{ path('admin_user_edit', {id: user.id}) }}" class="btn btn-sm btn-primary">
+                        <i class="fa fa-edit" aria-hidden="true"></i> {{ 'action.edit'|trans }}
+                    </a>
+
+                    {% if  role_admin  not in rolelist %}
+                     <a href="{{ path('admin_user_delete', {userid: user.id}) }}" class="btn btn-sm btn-primary">
+                        <i class="fa fa-trash" aria-hidden="true"></i> Delete
+                    </a>
+                   {% endif %}
+
+                </li>
+            </ul>
+    {% endfor %}
+</div>
+{% endblock %}
+
+{% block sidebar %}
+  {{ include('./partial/_banner.html.twig') }}
+{% endblock %}

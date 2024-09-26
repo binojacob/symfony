@@ -1,0 +1,63 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello CommentsController!{% endblock %}
+
+{% block main %}
+{{ include('./partial/_welcome.html.twig') }}
+<h2> Add Comments</h2>
+
+
+<span>Book Name : <strong>{{ bookdata.name  }}</strong></span>
+
+<div class="example-wrapper">
+
+<div class="mb-4">
+    {% for comment in comments %}
+
+
+        <div style="float:left;width:85%">{{ comment.description  }}</div>
+        <div>
+          <i> {{comment.username ? 'By '~comment.username : ''}} </i>
+          {% if(is_granted('ROLE_ADMIN')) %}
+          <a href={{ path("app_del_comment",{'commentid':  comment.id}) }} >Delete </a>
+          {% endif %}
+
+          {% if(is_granted('ROLE_AUTHOR')) %}
+            {% if(user.username == comment.username) %}
+              <a href={{ path("app_del_comment",{'commentid':  comment.id}) }} >Delete </a>
+            {% endif %}
+
+          {% endif %}
+        </div>
+        <br />
+    {% endfor %}
+</div>
+
+
+
+{{ form_start(form, {attr: {'novalidate': 'novalidate'}}) }}
+
+ <div class="row">
+  {{ form_label(form.username, 'Your Name') }}
+  {{ form_widget(form.username,{'value' : username}) }}
+ 
+</div>
+
+ <div class="row">
+  {{ form_label(form.description, 'Your Comments') }}
+  {{ form_widget(form.description, {attr: { value : '' } }) }}
+</div>
+
+ <div class="row mt-4">
+  {{ form_widget(form.Submit, {'attr' : {'style' : 'width:100px' }} ) }}
+</div>
+
+  {{ form_end(form) }}
+
+</div>
+{% endblock %}
+
+
+{% block sidebar %}
+  {{ include('./partial/_banner.html.twig') }}
+{% endblock %}
